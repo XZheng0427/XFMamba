@@ -10,7 +10,7 @@ This repository contains the code for our paper:
 **XFMamba: Cross-Fusion Mamba for Multi-View Medical Image Classification**  
 [[Paper on arXiv](https://arxiv.org/abs/2503.02619)] — Accepted at MICCAI 2025.
 
-![XFMamba Architecture](figs/XFMamba.png)
+![XFMamba Architecture](figs/XFMamba.jpg)
 
 ---
 
@@ -80,7 +80,7 @@ We use the following three publicly available medical imaging datasets:
 
 *FLOPs and AUROC results are based on the [CBIS-DDSM](https://www.cancerimagingarchive.net/collection/cbis-ddsm/) dataset.*
 
-![FLOPs](/data/DERI-USMSK/XiaoyuZheng-USMSK/XFMamba/figs/Fig2_left.jpg)
+![FLOPs](figs/Fig2_left.jpg)
 
 ### MURA (2 Classes)
 
