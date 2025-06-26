@@ -79,7 +79,7 @@ We use the following three publicly available medical imaging datasets:
 
 *FLOPs and AUROC results are based on the [CBIS-DDSM](https://www.cancerimagingarchive.net/collection/cbis-ddsm/) dataset.*
 
-![FLOPs vs. AUROC](figs/Fig2_left.jpg)
+![FLOPs](/data/DERI-USMSK/XiaoyuZheng-USMSK/XFMamba/figs/Fig2_left.jpg)
 
 ### MURA (2 Classes)
 
