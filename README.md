@@ -2,10 +2,11 @@
 
 <div align="center">
 <h1> XFMamba: Cross-fusion Mamba for multi-view medical image classification. </h1>
+</div>
 
 ## Introduction
 
-This repository contains the code for our paper `XFMamba: Cross-fusion Mamba for multi-view medical image classification`. [[Paper](https://arxiv.org/abs/2503.02619)] - NOw, it is accepted by MICCAI 25.
+This repository contains the code for our paper `XFMamba: Cross-fusion Mamba for multi-view medical image classification`. [[Paper](https://arxiv.org/abs/2503.02619)] - Now, it is accepted by MICCAI 25.
 
 ![](figs/XFMamba.png)
 
