@@ -1,5 +1,3 @@
-# XFMamba
-
 <div align="center">
 <h1>XFMamba: Cross-Fusion Mamba for Multi-View Medical Image Classification</h1>
 </div>
