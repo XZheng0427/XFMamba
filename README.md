@@ -42,7 +42,7 @@ We use the following three publicly available medical imaging datasets:
 
 ---
 
-## Training
+## Training and Inference
 
 1. Download the pre-trained VMamba weights and place them in the pretrained/vmamba directory:
 

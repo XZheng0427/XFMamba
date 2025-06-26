@@ -1,8 +1,6 @@
 results/
 checkpoints/
 wandb/
-pretrained/vmamba/vssm_base_0229_ckpt_epoch_237.pth
-pretrained/vmamba/vssm_small_0229_ckpt_epoch_222.pth
-pretrained/vmamba/vssm1_tiny_0230s_ckpt_epoch_264.pth
+*.pth
 
 submitv1_mura.sh
