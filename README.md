@@ -55,6 +55,7 @@ We use the following three publicly available medical imaging datasets:
 2. Train the model:
    ```bash
    python 1_train_model.py \
+       --root_dir '.' \
        --dataset 'mura' \
        --model_name 'dualfusionmambav13' \
        --num_tasks 1 \
