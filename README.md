@@ -46,9 +46,9 @@ We use the following three publicly available medical imaging datasets:
 
 1. Download the pre-trained VMamba weights and place them in the pretrained/vmamba directory:
 
-   - [VMamba_Tiny](https://drive.google.com/file/d/1W0EFQHvX4Cl6krsAwzlR-VKqQxfWEdM8/view?usp=drive_link)
-   - [VMamba_Small](https://drive.google.com/file/d/1671QXJ-faiNX4cYUlXxf8kCpAjeA4Oah/view?usp=drive_link)
-   - [VMamba_Base](https://drive.google.com/file/d/1qdH-CQxyUFLq6hElxCANz19IoS-_Cm1L/view?usp=drive_link)
+   - [VMamba_Tiny](https://drive.google.com/file/d/1YXzScYUW0cwX93kTE9Q0K0IPlzC6NNH6/view?usp=drive_link)
+   - [VMamba_Small](https://drive.google.com/file/d/1hCkUfGw-nn6-sXymJf-biqsoh9vU3MIK/view?usp=drive_link)
+   - [VMamba_Base](https://drive.google.com/file/d/1QOZsCG9JQsQZkz7tfuNVF2ZT7zEuUv4b/view?usp=drive_link)
 
 2. Train the model:
    ```bash
