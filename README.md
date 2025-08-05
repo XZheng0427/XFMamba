@@ -84,17 +84,17 @@ We use the following three publicly available medical imaging datasets:
 
 | Architecture | Backbone   | AUROC | Weight Link     |
 |--------------|------------|-------|-----------------|
-| XFMamba      | VMamba-T   | 89.8% | [XFMamba-T]()    |
-| XFMamba      | VMamba-S   | 91.0% | [XFMamba-S]()    |
-| XFMamba      | VMamba-B   | 90.4% | [XFMamba-B]()    |
+| XFMamba      | VMamba-T   | 89.8% | [XFMamba-T](https://drive.google.com/file/d/1UQObg_tM3w1AGCnptctv0OlwNVJBYmzo/view?usp=drive_link)    |
+| XFMamba      | VMamba-S   | 91.0% | [XFMamba-S](https://drive.google.com/file/d/1uxKAXW4KxQKn7sxs60segTFFDtC2sz2J/view?usp=drive_link)    |
+| XFMamba      | VMamba-B   | 90.4% | [XFMamba-B](https://drive.google.com/file/d/1Et0Czr-rr4KM5saTAFZEYu2FixmpI-Zw/view?usp=drive_link)    |
 
 ### CheXpert (13 Classes)
 
 | Architecture | Backbone   | AUROC | Weight Link     |
 |--------------|------------|-------|-----------------|
-| XFMamba      | VMamba-T   | 91.7% | [XFMamba-T]()    |
-| XFMamba      | VMamba-S   | 91.8% | [XFMamba-S]()    |
-| XFMamba      | VMamba-B   | 91.9% | [XFMamba-B]()    |
+| XFMamba      | VMamba-T   | 91.7% | [XFMamba-T](https://drive.google.com/file/d/1jsEYQcbxhjTt2E_TUlMpTah7bNdWbToE/view?usp=drive_link)    |
+| XFMamba      | VMamba-S   | 91.8% | [XFMamba-S](https://drive.google.com/file/d/1U3asp8gK8T9Rczs4c-b0XsMuvYUcY_eE/view?usp=drive_link)    |
+| XFMamba      | VMamba-B   | 91.9% | [XFMamba-B](https://drive.google.com/file/d/1aLHHREXUKICZpoJTrAXaUk5_tO5dl5L7/view?usp=drive_link)    |
 
 ### CBIS-DDSM (2 Classes)
 
