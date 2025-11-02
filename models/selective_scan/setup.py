@@ -1,4 +1,4 @@
-# Modified by Mzero #20240123
+# Modified by $@#Anonymous#@$ #20240123
 # Copyright (c) 2023, Albert Gu, Tri Dao.
 import sys
 import warnings
@@ -27,6 +27,11 @@ this_dir = os.path.dirname(os.path.abspath(__file__))
 # For CI, we want the option to build with C++11 ABI since the nvcr images use C++11 ABI
 FORCE_CXX11_ABI = os.getenv("FORCE_CXX11_ABI", "FALSE") == "TRUE"
 
+def get_compute_capability():
+    device = torch.device("cuda")
+    capability = torch.cuda.get_device_capability(device)
+    return int(str(capability[0]) + str(capability[1]))
+    
 def get_cuda_bare_metal_version(cuda_dir):
     raw_output = subprocess.check_output(
         [cuda_dir + "/bin/nvcc", "-V"], universal_newlines=True
@@ -37,29 +42,33 @@ def get_cuda_bare_metal_version(cuda_dir):
 
     return raw_output, bare_metal_version
 
+MODES = ["oflex"]
+# MODES = ["core", "ndstate", "oflex"]
+# MODES = ["core", "ndstate", "oflex", "nrow"]
 
 def get_ext():
-    ext_modules = []
     cc_flag = []
 
     print("\n\ntorch.__version__  = {}\n\n".format(torch.__version__))
+    print("\n\nCUDA_HOME = {}\n\n".format(CUDA_HOME))
 
-    # Check, if CUDA11 is installed for compute capability 8.0
+    # Check if card has compute capability 8.0 or higher for BFloat16 operations
+    if get_compute_capability() < 80:
+        warnings.warn("This code uses BFloat16 date type, which is only supported on GPU architectures with compute capability 8.0 or higher")
+        
+    multi_threads = True
     if CUDA_HOME is not None:
         _, bare_metal_version = get_cuda_bare_metal_version(CUDA_HOME)
+        print("CUDA version: ", bare_metal_version, flush=True)
         if bare_metal_version < Version("11.6"):
-            raise RuntimeError(
-                f"package is only supported on CUDA 11.6 and above.  "
-                "Note: make sure nvcc has a supported version by running nvcc -V."
-            )
-
-    cc_flag.append("-gencode")
-    cc_flag.append("arch=compute_70,code=sm_70")
-    cc_flag.append("-gencode")
-    cc_flag.append("arch=compute_80,code=sm_80")
-    if bare_metal_version >= Version("11.8"):
-        cc_flag.append("-gencode")
-        cc_flag.append("arch=compute_90,code=sm_90")
+            warnings.warn("CUDA version ealier than 11.6 may leads to performance mismatch.")
+        if bare_metal_version < Version("11.2"):
+            multi_threads = False
+            
+    cc_flag.append(f"-arch=sm_{get_compute_capability()}")
+    
+    if multi_threads:
+        cc_flag.extend(["--threads", "4"])
 
     # HACK: The compiler flag -D_GLIBCXX_USE_CXX11_ABI is set to be the same as
     # torch._C._GLIBCXX_USE_CXX11_ABI
@@ -67,16 +76,46 @@ def get_ext():
     if FORCE_CXX11_ABI:
         torch._C._GLIBCXX_USE_CXX11_ABI = True
 
-    ext_modules.append(
+    sources = dict(
+        core=[
+            "csrc/selective_scan/cus/selective_scan.cpp",
+            "csrc/selective_scan/cus/selective_scan_core_fwd.cu",
+            "csrc/selective_scan/cus/selective_scan_core_bwd.cu",
+        ],
+        nrow=[
+            "csrc/selective_scan/cusnrow/selective_scan_nrow.cpp",
+            "csrc/selective_scan/cusnrow/selective_scan_core_fwd.cu",
+            "csrc/selective_scan/cusnrow/selective_scan_core_fwd2.cu",
+            "csrc/selective_scan/cusnrow/selective_scan_core_fwd3.cu",
+            "csrc/selective_scan/cusnrow/selective_scan_core_fwd4.cu",
+            "csrc/selective_scan/cusnrow/selective_scan_core_bwd.cu",
+            "csrc/selective_scan/cusnrow/selective_scan_core_bwd2.cu",
+            "csrc/selective_scan/cusnrow/selective_scan_core_bwd3.cu",
+            "csrc/selective_scan/cusnrow/selective_scan_core_bwd4.cu",
+        ],
+        ndstate=[
+            "csrc/selective_scan/cusndstate/selective_scan_ndstate.cpp",
+            "csrc/selective_scan/cusndstate/selective_scan_core_fwd.cu",
+            "csrc/selective_scan/cusndstate/selective_scan_core_bwd.cu",
+        ],
+        oflex=[
+            "csrc/selective_scan/cusoflex/selective_scan_oflex.cpp",
+            "csrc/selective_scan/cusoflex/selective_scan_core_fwd.cu",
+            "csrc/selective_scan/cusoflex/selective_scan_core_bwd.cu",
+        ],
+    )
+
+    names = dict(
+        core="selective_scan_cuda_core",
+        nrow="selective_scan_cuda_nrow",
+        ndstate="selective_scan_cuda_ndstate",
+        oflex="selective_scan_cuda_oflex",
+    )
+
+    ext_modules = [
         CUDAExtension(
-            name="selective_scan_cuda_core",
-            sources=[
-                "csrc/selective_scan/selective_scan.cpp",
-                "csrc/selective_scan/selective_scan_core.cu",
-                "csrc/selective_scan/selective_scan_core_fwd2.cu",
-                "csrc/selective_scan/selective_scan_core_fwd3.cu",
-                "csrc/selective_scan/selective_scan_core_fwd4.cu",
-            ],
+            name=names.get(MODE, None),
+            sources=sources.get(MODE, None),
             extra_compile_args={
                 "cxx": ["-O3", "-std=c++17"],
                 "nvcc": [
@@ -95,32 +134,21 @@ def get_ext():
                             "-lineinfo",
                         ]
                         + cc_flag
-                        + ["--threads", "4"],
             },
             include_dirs=[Path(this_dir) / "csrc" / "selective_scan"],
         )
-    )
+        for MODE in MODES
+    ]
 
     return ext_modules
-
 
 ext_modules = get_ext()
 setup(
     name="selective_scan",
-    version="0.0.1",
-    packages=find_packages(
-        exclude=(
-            "build",
-            "csrc",
-            "include",
-            "tests",
-            "dist",
-            "docs",
-            "benchmarks",
-        )
-    ),
-    author="Tri Dao, Albert Gu, Mzreo",
-    author_email="tri@tridao.me, agu@cs.cmu.edu, liuyue171@mails.ucas.ac.cn",
+    version="0.0.2",
+    packages=[],
+    author="Tri Dao, Albert Gu, $@#Anonymous#@$ ",
+    author_email="tri@tridao.me, agu@cs.cmu.edu, $@#Anonymous#EMAIL@$",
     description="selective scan",
     long_description="",
     long_description_content_type="text/markdown",
