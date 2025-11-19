@@ -40,6 +40,11 @@ We use the following three publicly available medical imaging datasets:
 - [CheXpert](https://stanfordmlgroup.github.io/competitions/chexpert/)
 - [CBIS-DDSM](https://www.cancerimagingarchive.net/collection/cbis-ddsm/)
 
+The dataset CSV:
+- [MURA](https://drive.google.com/drive/folders/1FNNxGkxmxBxTFoVi6WIuvKLWoWmALz-9?usp=sharing)
+- [CheXpert](https://drive.google.com/drive/folders/1BaDUcjuQXCIbQ7CXIPe11_1so9V2wgYX?usp=sharing)
+- [CBIS-DDSM](https://drive.google.com/drive/folders/16RM3VxNpv8mnHRw66Bp7Djqxc4dXkC4J?usp=sharing)
+
 ---
 
 ## Training and Inference
