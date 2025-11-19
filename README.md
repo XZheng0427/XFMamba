@@ -116,10 +116,12 @@ The dataset CSV:
 If you find this repository helpful for your research, please consider citing our work:
 
 ```bibtex
-@article{zheng2025xfmamba,
-  title={XFMamba: Cross-Fusion Mamba for Multi-View Medical Image Classification},
+@inproceedings{zheng2025xfmamba,
+  title={Xfmamba: Cross-fusion mamba for multi-view medical image classification},
   author={Zheng, Xiaoyu and Chen, Xu and Gong, Shaogang and Griffin, Xavier and Slabaugh, Greg},
-  journal={arXiv preprint arXiv:2503.02619},
-  year={2025}
+  booktitle={International Conference on Medical Image Computing and Computer-Assisted Intervention},
+  pages={672--682},
+  year={2025},
+  organization={Springer}
 }
 ```
